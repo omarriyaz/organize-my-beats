@@ -34,6 +34,7 @@ def get_bpm(file_name):
 
     tempos = 60.0 / beat_intervals
     tempo_rounded = np.mean(tempos)
+    
     tempo_rounded = round(tempo_rounded)
 
     if tempo_rounded < 100: tempo_rounded = tempo_rounded * 2
