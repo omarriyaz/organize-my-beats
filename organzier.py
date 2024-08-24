@@ -41,11 +41,11 @@ def get_bpm(file_name):
     print(file_name[:-4] + " TEMPO: " + str(tempo_rounded))
 
 # convert all mp3 files to wav files
-for beat_name in os.listdir(file_path):
+for beat_name in sorted(os.listdir(file_path)):
     if beat_name.endswith(".mp3"):
         remove_silence(beat_name)
 
 # get the bpm of all the wav files
-for beat_name in os.listdir(file_path):
+for beat_name in sorted(os.listdir(file_path)):
     if beat_name.endswith(".wav"):
         get_bpm(beat_name)
