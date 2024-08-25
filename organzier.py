@@ -41,6 +41,29 @@ def get_bpm(file_name):
 
     print(file_name[:-4] + " TEMPO: " + str(tempo_rounded))
 
+def get_key(file_name):
+    # This function returns the key of the wav file
+
+    # y stores the audio time series and sr stores the sampling rate of y
+    y, sr = librosa.load(file_path + "/" + file_name)
+
+    # Compute the Chroma Short-Time Fourier Transform (chroma_stft)
+    chromagram = librosa.feature.chroma_stft(y=y, sr=sr)
+
+    # Calculate the mean chroma feature across time
+    mean_chroma = np.mean(chromagram, axis=1)
+
+    # Define the mapping of chroma features to keys
+    chroma_to_key = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+
+    # Find the key by selecting the maximum chroma feature
+    estimated_key_index = np.argmax(mean_chroma)
+    estimated_key = chroma_to_key[estimated_key_index]
+
+    # Print the detected key
+    print(file_name[:-4] + " KEY: " + str(estimated_key))
+
+
 # convert all mp3 files to wav files
 for beat_name in sorted(os.listdir(file_path)):
     if beat_name.endswith(".mp3"):
@@ -50,3 +73,6 @@ for beat_name in sorted(os.listdir(file_path)):
 for beat_name in sorted(os.listdir(file_path)):
     if beat_name.endswith(".wav"):
         get_bpm(beat_name)
+        get_key(beat_name)
+
+
